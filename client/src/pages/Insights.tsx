@@ -48,7 +48,7 @@ export default function Insights() {
                   <div className="absolute inset-0 flex items-center justify-center text-muted-foreground">
                     Product Image
                   </div>
-                  <Badge className="absolute top-2 right-2 bg-primary text-primary-foreground">{item.match}% Match</Badge>
+                  <Badge className="absolute top-2 right-2 bg-emerald-500 text-white border-none">{item.match}% Match</Badge>
                 </div>
                 <CardHeader>
                   <CardTitle className="text-lg">{item.name}</CardTitle>
@@ -56,8 +56,8 @@ export default function Insights() {
                 </CardHeader>
                 <CardContent className="flex-1 flex flex-col justify-between gap-4">
                   <div className="bg-muted/50 p-3 rounded-md text-sm">
-                    <span className="font-semibold text-primary">Why: </span>
-                    <span className="text-muted-foreground">{item.why}</span>
+                    <span className="font-semibold text-primary block mb-1">Why Recommended:</span>
+                    <span className="text-muted-foreground text-xs">{item.why}</span>
                   </div>
                   <Button className="w-full" variant="outline">View Details</Button>
                 </CardContent>

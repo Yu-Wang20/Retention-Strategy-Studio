@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { AlertTriangle, CheckCircle, HelpCircle, Play, RefreshCw } from "lucide-react";
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from "recharts";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Tooltip as TooltipComponent, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 // Mock Calibration Curve Data
 const calibrationData = [
@@ -117,53 +119,64 @@ export default function ChurnPrediction() {
           </CardHeader>
           <CardContent>
             <div className="rounded-md border">
-              <table className="w-full text-sm text-left">
-                <thead className="bg-muted/50 text-muted-foreground font-medium">
-                  <tr>
-                    <th className="px-4 py-3">Customer</th>
-                    <th className="px-4 py-3">Segment</th>
-                    <th className="px-4 py-3">Last Purchase</th>
-                    <th className="px-4 py-3">Total Spend</th>
-                    <th className="px-4 py-3">Churn Prob.</th>
-                    <th className="px-4 py-3 text-right">Action</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y">
-                  {churnRiskData.map((customer, i) => (
-                    <tr key={i} className="hover:bg-muted/50 transition-colors">
-                      <td className="px-4 py-3 font-medium">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Customer</TableHead>
+                    <TableHead>Segment</TableHead>
+                    <TableHead>Churn Probability</TableHead>
+                    <TableHead>Risk Factors (SHAP)</TableHead>
+                    <TableHead>Last Purchase</TableHead>
+                    <TableHead className="text-right">Action</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {churnRiskData.map((customer) => (
+                    <TableRow key={customer.id}>
+                      <TableCell className="font-medium">
                         <div>{customer.name}</div>
                         <div className="text-xs text-muted-foreground">{customer.id}</div>
-                      </td>
-                      <td className="px-4 py-3">
-                        <Badge variant="outline" className="font-normal">
-                          {customer.rfm_segment}
-                        </Badge>
-                      </td>
-                      <td className="px-4 py-3 text-muted-foreground">{customer.last_purchase}</td>
-                      <td className="px-4 py-3 text-muted-foreground">R$ {customer.total_spend}</td>
-                      <td className="px-4 py-3">
+                      </TableCell>
+                      <TableCell>
+                        <Badge variant="outline">{customer.rfm_segment}</Badge>
+                      </TableCell>
+                      <TableCell>
                         <div className="flex items-center gap-2">
                           <div className="w-16 h-2 bg-muted rounded-full overflow-hidden">
                             <div 
-                              className="h-full bg-destructive" 
+                              className={`h-full ${customer.churn_prob > 0.8 ? 'bg-destructive' : 'bg-amber-500'}`} 
                               style={{ width: `${customer.churn_prob * 100}%` }} 
                             />
                           </div>
-                          <span className="text-xs font-medium text-destructive">
-                            {(customer.churn_prob * 100).toFixed(0)}%
-                          </span>
+                          <span className="text-sm font-medium">{(customer.churn_prob * 100).toFixed(0)}%</span>
                         </div>
-                      </td>
-                      <td className="px-4 py-3 text-right">
-                        <Button size="sm" variant="secondary" className="h-7 text-xs">
-                          Retain
-                        </Button>
-                      </td>
-                    </tr>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex flex-col gap-1">
+                          {customer.shap_values?.slice(0, 2).map((shap, idx) => (
+                            <div key={idx} className="flex items-center gap-1 text-[10px]">
+                              <span className="text-muted-foreground w-16 truncate" title={shap.feature}>{shap.feature}</span>
+                              <div className="flex-1 h-1.5 bg-muted rounded-full overflow-hidden w-12">
+                                <div 
+                                  className={`h-full ${shap.value > 0 ? 'bg-destructive' : 'bg-emerald-500'}`} 
+                                  style={{ width: `${Math.min(Math.abs(shap.value) * 100, 100)}%` }} 
+                                />
+                              </div>
+                              <span className={`w-6 text-right ${shap.value > 0 ? 'text-destructive' : 'text-emerald-500'}`}>
+                                {shap.value > 0 ? '+' : ''}{shap.value.toFixed(2)}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      </TableCell>
+                      <TableCell>{customer.last_purchase}</TableCell>
+                      <TableCell className="text-right">
+                        <Button size="sm" variant="ghost">Details</Button>
+                      </TableCell>
+                    </TableRow>
                   ))}
-                </tbody>
-              </table>
+                </TableBody>
+              </Table>
             </div>
           </CardContent>
         </Card>

@@ -150,21 +150,32 @@ export default function RFMAnalysis() {
                           </div>
                         </div>
                         
-                        <div className="space-y-2">
-                          <h4 className="font-semibold flex items-center gap-2">
-                            <Target className="w-4 h-4 text-primary" />
-                            Recommended Actions
-                          </h4>
-                          <ul className="space-y-2 text-sm text-muted-foreground">
-                            <li className="flex items-start gap-2">
-                              <ArrowRight className="w-4 h-4 mt-0.5 text-primary/50" />
-                              <span>Launch personalized email campaign offering {segment.name === 'Champions' ? 'early access to new products' : 'a time-limited discount'}.</span>
-                            </li>
-                            <li className="flex items-start gap-2">
-                              <ArrowRight className="w-4 h-4 mt-0.5 text-primary/50" />
-                              <span>{segment.name === 'Champions' ? 'Invite to VIP loyalty program.' : 'Send "We miss you" push notification.'}</span>
-                            </li>
-                          </ul>
+                        <div className="space-y-4">
+                          <div>
+                            <h4 className="text-sm font-semibold mb-1">Segment Definition</h4>
+                            <p className="text-xs text-muted-foreground">
+                              {segment.name === 'Champions' ? 'R score 4-5, F score 4-5, M score 4-5' : 
+                               segment.name === 'Loyal Customers' ? 'R score 3-5, F score 3-5, M score 3-5' :
+                               segment.name === 'At Risk' ? 'R score 1-2, F score 2-5, M score 2-5' :
+                               'Based on RFM scoring rules'}
+                            </p>
+                          </div>
+                          <div className="space-y-2">
+                            <h4 className="font-semibold flex items-center gap-2">
+                              <Target className="w-4 h-4 text-primary" />
+                              Recommended Actions
+                            </h4>
+                            <ul className="space-y-2 text-sm text-muted-foreground">
+                              <li className="flex items-start gap-2">
+                                <ArrowRight className="w-4 h-4 mt-0.5 text-primary/50" />
+                                <span>Launch personalized email campaign offering {segment.name === 'Champions' ? 'early access to new products' : 'a time-limited discount'}.</span>
+                              </li>
+                              <li className="flex items-start gap-2">
+                                <ArrowRight className="w-4 h-4 mt-0.5 text-primary/50" />
+                                <span>{segment.name === 'Champions' ? 'Invite to VIP loyalty program.' : 'Send "We miss you" push notification.'}</span>
+                              </li>
+                            </ul>
+                          </div>
                         </div>
                       </div>
                     </DialogContent>

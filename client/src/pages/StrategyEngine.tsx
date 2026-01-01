@@ -288,13 +288,14 @@ export default function StrategyEngine() {
                         </div>
                       </div>
                       <div className="space-y-2">
-                        <div className="flex justify-between text-sm">
-                          <span>Variant B (Product)</span>
-                          <span className="font-medium">1.3% CTR (+8%)</span>
+                        <div className="flex justify-between text-xs">
+                          <span className="text-muted-foreground">Confidence Level</span>
+                          <span className="font-medium">92%</span>
                         </div>
-                        <div className="h-2 bg-muted rounded-full overflow-hidden">
-                          <div className="h-full bg-blue-500" style={{ width: '32%' }} />
+                        <div className="h-1.5 w-full bg-muted rounded-full overflow-hidden">
+                          <div className="h-full bg-emerald-500" style={{ width: '92%' }} />
                         </div>
+                        <p className="text-xs text-muted-foreground text-right">Need 95% for significance</p>
                       </div>
                     </div>
                   </div>

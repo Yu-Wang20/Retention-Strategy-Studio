@@ -87,13 +87,18 @@ export const rfmSegments: RFMSegment[] = [
   { name: "Lost", count: 1700, value: 35000, description: "Lowest recency, frequency and monetary scores.", color: "#64748B" }, // Slate
 ];
 
-export const churnRiskData = Array.from({ length: 20 }, (_, i) => ({
+export const churnRiskData = Array.from({ length: 50 }, (_, i) => ({
   id: `USR-${1000 + i}`,
   name: `Customer ${1000 + i}`,
   rfm_segment: i % 3 === 0 ? "Champions" : i % 2 === 0 ? "Loyal Customers" : "At Risk",
   churn_prob: 0.6 + Math.random() * 0.35, // High risk 60-95%
   last_purchase: `${Math.floor(Math.random() * 60) + 30} days ago`,
   total_spend: Math.floor(Math.random() * 2000) + 500,
+  shap_values: [
+    { feature: 'Recency', value: Math.random() * 0.5, impact: 'high' },
+    { feature: 'Frequency', value: -Math.random() * 0.3, impact: 'medium' },
+    { feature: 'Monetary', value: Math.random() * 0.2, impact: 'low' }
+  ]
 }));
 
 export const sentimentData = [

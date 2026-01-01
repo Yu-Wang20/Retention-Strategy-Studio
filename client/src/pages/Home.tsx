@@ -114,8 +114,12 @@ export default function Home() {
                     fill="url(#colorRevenue)" 
                   />
                   {/* Event Annotation */}
-                  <ReferenceLine x={eventDate} stroke="var(--primary)" strokeDasharray="3 3" label={{ value: "Flash Sale", position: 'top', fill: 'var(--primary)', fontSize: 12 }} />
-                  <ReferenceDot x={eventDate} y={revenueData[eventIndex].revenue} r={6} fill="var(--primary)" stroke="var(--background)" strokeWidth={2} />
+                  <ReferenceLine x={eventDate} stroke="var(--destructive)" strokeDasharray="3 3" label={{ value: "Black Friday Promo", position: 'insideTopRight', fill: 'var(--destructive)', fontSize: 12 }} />
+                  <ReferenceDot x={eventDate} y={revenueData[eventIndex].revenue} r={6} fill="var(--destructive)" stroke="var(--background)" strokeWidth={2} />
+                  
+                  {/* Additional Event for Narrative */}
+                  <ReferenceLine x={revenueData[5].date} stroke="#10B981" strokeDasharray="3 3" label={{ value: "New Collection", position: 'insideTopLeft', fill: '#10B981', fontSize: 12 }} />
+                  <ReferenceDot x={revenueData[5].date} y={revenueData[5].revenue} r={6} fill="#10B981" stroke="var(--background)" strokeWidth={2} />
                 </AreaChart>
               </ResponsiveContainer>
             </div>

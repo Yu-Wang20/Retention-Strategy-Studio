@@ -137,37 +137,61 @@ export default function Documentation() {
           <div className="grid gap-4 md:grid-cols-2">
             <Card>
               <CardHeader>
-                <CardTitle className="text-base">RFM Analysis</CardTitle>
+                <CardTitle className="text-base">1. Data Management</CardTitle>
               </CardHeader>
               <CardContent className="text-sm text-muted-foreground">
-                3D visualization of customer segments based on Recency, Frequency, and Monetary value. Includes detailed segment breakdowns and tailored strategy recommendations.
+                <p className="mb-2">Upload your Olist datasets (CSV format). The system automatically validates the schema and maps fields.</p>
+                <ul className="list-disc list-inside space-y-1 ml-2">
+                  <li><strong>Required Files:</strong> <code>olist_customers_dataset.csv</code>, <code>olist_orders_dataset.csv</code></li>
+                  <li><strong>Health Checks:</strong> Duplicate IDs, Missing Values, Date Formats, Negative Values</li>
+                </ul>
               </CardContent>
             </Card>
             <Card>
               <CardHeader>
-                <CardTitle className="text-base">Churn Prediction</CardTitle>
+                <CardTitle className="text-base">2. RFM Analysis</CardTitle>
               </CardHeader>
               <CardContent className="text-sm text-muted-foreground">
-                ML-powered risk assessment with SHAP value explanations. Identifies high-risk users and provides global feature importance analysis.
+                <p className="mb-2">Customers are segmented into 6 groups based on Recency (R), Frequency (F), and Monetary (M) scores (1-5 scale).</p>
+                <ul className="list-disc list-inside space-y-1 ml-2">
+                  <li><strong>Champions:</strong> High R, High F, High M. Strategy: Reward & Upsell.</li>
+                  <li><strong>Loyal Customers:</strong> Moderate R, High F, Moderate M. Strategy: Engagement.</li>
+                  <li><strong>At Risk:</strong> Low R, High F, High M. Strategy: Win-back campaigns.</li>
+                </ul>
               </CardContent>
             </Card>
             <Card>
               <CardHeader>
-                <CardTitle className="text-base">Strategy Engine</CardTitle>
+                <CardTitle className="text-base">3. Churn Prediction</CardTitle>
               </CardHeader>
               <CardContent className="text-sm text-muted-foreground">
-                <strong>Promotion Simulator:</strong> Calculate ROI and marginal returns for campaigns.<br/>
-                <strong>A/B Testing:</strong> Design experiments and calculate required sample sizes.
+                <p className="mb-2">Predicts the likelihood of a customer not purchasing in the next 90 days.</p>
+                <ul className="list-disc list-inside space-y-1 ml-2">
+                  <li><strong>Model:</strong> XGBoost / Logistic Regression (Calibrated)</li>
+                  <li><strong>Features:</strong> Recency, Frequency, Monetary, Avg Rating, Support Tickets</li>
+                  <li><strong>Interpretation:</strong> SHAP values explain individual risk factors.</li>
+                </ul>
               </CardContent>
             </Card>
             <Card>
               <CardHeader>
-                <CardTitle className="text-base">Market Insights</CardTitle>
+                <CardTitle className="text-base">4. Strategy Engine</CardTitle>
               </CardHeader>
               <CardContent className="text-sm text-muted-foreground">
-                <strong>Recommendation:</strong> Personalized product suggestions with "Why" explanations.<br/>
-                <strong>Sentiment:</strong> NLP analysis of reviews with driver attribution.<br/>
-                <strong>Trends:</strong> Emerging topic tracking and keyword graphs.
+                <p className="mb-2"><strong>Promotion Simulator:</strong> Estimate ROI, Incremental Revenue, and Retained Users based on budget and discount type.</p>
+                <p><strong>A/B Test Designer:</strong> Calculate required sample size and monitor active experiments for statistical significance.</p>
+              </CardContent>
+            </Card>
+            <Card className="md:col-span-2">
+              <CardHeader>
+                <CardTitle className="text-base">5. Market Insights</CardTitle>
+              </CardHeader>
+              <CardContent className="text-sm text-muted-foreground">
+                <ul className="grid md:grid-cols-3 gap-4">
+                  <li><strong>Recommendation:</strong> Personalized product suggestions with "Why" explanations.</li>
+                  <li><strong>Sentiment:</strong> NLP analysis of reviews with driver attribution.</li>
+                  <li><strong>Trends:</strong> Emerging topic tracking and keyword graphs.</li>
+                </ul>
               </CardContent>
             </Card>
           </div>
