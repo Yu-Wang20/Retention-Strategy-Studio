@@ -3,7 +3,8 @@ import { rfmSegments } from "@/lib/mockData";
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ZAxis, Legend } from "recharts";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Download } from "lucide-react";
+import { Download, Users, DollarSign, Target, ArrowRight } from "lucide-react";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 // Generate mock scatter data for RFM visualization
 const generateScatterData = () => {
@@ -110,12 +111,64 @@ export default function RFMAnalysis() {
                     </Badge>
                   </div>
                   <div className="flex justify-between text-xs text-muted-foreground mb-2">
-                    <span>{segment.count.toLocaleString()} Users</span>
-                    <span>R$ {segment.value.toLocaleString()}</span>
+                    <div className="flex items-center gap-1">
+                      <Users className="w-3 h-3" />
+                      <span>{segment.count.toLocaleString()}</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <DollarSign className="w-3 h-3" />
+                      <span>R$ {segment.value.toLocaleString()}</span>
+                    </div>
                   </div>
-                  <p className="text-xs text-muted-foreground/80 line-clamp-2">
+                  <p className="text-xs text-muted-foreground/80 line-clamp-2 mb-3">
                     {segment.description}
                   </p>
+                  
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button variant="outline" size="sm" className="w-full h-7 text-xs">View Strategy</Button>
+                    </DialogTrigger>
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle className="flex items-center gap-2">
+                          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: segment.color }} />
+                          {segment.name} Strategy
+                        </DialogTitle>
+                        <DialogDescription>
+                          Tailored marketing approach for this segment.
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div className="space-y-4 py-4">
+                        <div className="grid grid-cols-2 gap-4">
+                          <div className="p-4 rounded-lg bg-muted/50 space-y-1">
+                            <div className="text-sm text-muted-foreground">Total GMV Contribution</div>
+                            <div className="text-2xl font-bold">R$ {segment.value.toLocaleString()}</div>
+                          </div>
+                          <div className="p-4 rounded-lg bg-muted/50 space-y-1">
+                            <div className="text-sm text-muted-foreground">Avg. Order Value</div>
+                            <div className="text-2xl font-bold">R$ {Math.round(segment.value / segment.count)}</div>
+                          </div>
+                        </div>
+                        
+                        <div className="space-y-2">
+                          <h4 className="font-semibold flex items-center gap-2">
+                            <Target className="w-4 h-4 text-primary" />
+                            Recommended Actions
+                          </h4>
+                          <ul className="space-y-2 text-sm text-muted-foreground">
+                            <li className="flex items-start gap-2">
+                              <ArrowRight className="w-4 h-4 mt-0.5 text-primary/50" />
+                              <span>Launch personalized email campaign offering {segment.name === 'Champions' ? 'early access to new products' : 'a time-limited discount'}.</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <ArrowRight className="w-4 h-4 mt-0.5 text-primary/50" />
+                              <span>{segment.name === 'Champions' ? 'Invite to VIP loyalty program.' : 'Send "We miss you" push notification.'}</span>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
                 </div>
               ))}
             </div>

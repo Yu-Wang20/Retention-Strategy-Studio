@@ -102,3 +102,27 @@ export const sentimentData = [
   { date: "Week 3", positive: 58, neutral: 25, negative: 17 },
   { date: "Week 4", positive: 70, neutral: 20, negative: 10 }, // Campaign effect
 ];
+
+export const mockFeatureImportance = [
+  { feature: 'Recency', importance: 0.35 },
+  { feature: 'Frequency', importance: 0.25 },
+  { feature: 'Monetary', importance: 0.15 },
+  { feature: 'Avg Rating', importance: 0.12 },
+  { feature: 'Support Tickets', importance: 0.08 },
+  { feature: 'Return Rate', importance: 0.05 },
+];
+
+export const mockSentimentDrivers = [
+  { factor: 'Delivery Speed', impact: 12, type: 'positive' },
+  { factor: 'Product Quality', impact: 8, type: 'positive' },
+  { factor: 'Customer Service', impact: 5, type: 'positive' },
+  { factor: 'Packaging', impact: -5, type: 'negative' },
+  { factor: 'Return Process', impact: -8, type: 'negative' },
+];
+
+export const mockEmergingTopics = [
+  { topic: 'Fast Delivery', mentions: 1250, trend: 'up', sentiment: 'positive' },
+  { topic: 'Product Quality', mentions: 980, trend: 'up', sentiment: 'positive' },
+  { topic: 'Return Process', mentions: 450, trend: 'down', sentiment: 'negative' },
+  { topic: 'Customer Support', mentions: 320, trend: 'stable', sentiment: 'neutral' },
+];

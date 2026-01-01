@@ -9,12 +9,17 @@ import {
   FileText,
   Settings,
   Menu,
-  X
+  X,
+  Download
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import { toast } from "sonner";
 
 const navItems = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/" },
@@ -64,7 +69,55 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </nav>
         </ScrollArea>
 
-        <div className="p-4 border-t border-sidebar-border/50">
+        <div className="p-4 border-t border-sidebar-border/50 space-y-4">
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant="outline" size="sm" className="w-full gap-2 justify-start">
+                <Download className="w-4 h-4" />
+                Export Report
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Export Analysis Report</DialogTitle>
+                <DialogDescription>
+                  Select the modules you want to include in the PDF report.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="grid gap-4 py-4">
+                <div className="flex items-center space-x-2">
+                  <Checkbox id="dashboard" defaultChecked />
+                  <Label htmlFor="dashboard">Dashboard Overview</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Checkbox id="rfm" defaultChecked />
+                  <Label htmlFor="rfm">RFM Analysis & Segments</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Checkbox id="churn" defaultChecked />
+                  <Label htmlFor="churn">Churn Prediction Model</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Checkbox id="strategy" defaultChecked />
+                  <Label htmlFor="strategy">Strategy Simulation Results</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Checkbox id="insights" defaultChecked />
+                  <Label htmlFor="insights">Market Insights</Label>
+                </div>
+              </div>
+              <DialogFooter>
+                <Button onClick={() => {
+                  toast.success("Report generation started", {
+                    description: "Your PDF report will be ready for download shortly."
+                  });
+                }}>
+                  Generate PDF
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+
           <div className="flex items-center gap-3 px-3 py-2 rounded-md bg-sidebar-accent/30">
             <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-xs font-bold text-primary">
               AD

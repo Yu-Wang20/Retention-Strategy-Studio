@@ -1,120 +1,294 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
-import { CheckCircle2, Code2, Database, Layers, Zap } from "lucide-react";
+import { CheckCircle2, Code2, Database, Layers, LayoutDashboard, LineChart, ShieldCheck, Zap } from "lucide-react";
 
 export default function Documentation() {
   return (
-    <div className="space-y-8 max-w-4xl mx-auto">
-      <div className="flex flex-col gap-2">
-        <h1 className="text-3xl font-bold tracking-tight text-foreground">Project Documentation</h1>
-        <p className="text-muted-foreground">
-          Comprehensive guide to the User Lifecycle Strategy Engine architecture and features.
+    <div className="space-y-8 max-w-5xl mx-auto">
+      <div className="space-y-2">
+        <div className="flex items-center gap-2">
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">Project Documentation</h1>
+          <Badge variant="outline" className="text-primary border-primary/20 bg-primary/5">v2.0.0</Badge>
+        </div>
+        <p className="text-muted-foreground text-lg">
+          Technical reference and user guide for the Lifecycle Strategy Engine.
         </p>
       </div>
 
-      {/* Project Overview */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Layers className="w-5 h-5 text-primary" />
-            Project Overview
-          </CardTitle>
-          <CardDescription>
-            A data-driven platform designed to optimize customer lifecycle management through advanced analytics and AI.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <p className="leading-7">
-            This project leverages the Brazilian E-Commerce Public Dataset by Olist to demonstrate a complete end-to-end solution for customer retention and value maximization. It integrates RFM analysis, churn prediction, and personalized recommendations into a unified strategy engine.
-          </p>
-          <div className="flex flex-wrap gap-2 mt-4">
-            <Badge variant="secondary">React 19</Badge>
-            <Badge variant="secondary">Tailwind CSS 4</Badge>
-            <Badge variant="secondary">Recharts</Badge>
-            <Badge variant="secondary">TypeScript</Badge>
-            <Badge variant="secondary">Vite</Badge>
+      <Tabs defaultValue="overview" className="space-y-6">
+        <TabsList className="grid w-full grid-cols-4 lg:w-[600px]">
+          <TabsTrigger value="overview">Overview</TabsTrigger>
+          <TabsTrigger value="architecture">Architecture</TabsTrigger>
+          <TabsTrigger value="features">Features</TabsTrigger>
+          <TabsTrigger value="api">Data Schema</TabsTrigger>
+        </TabsList>
+
+        {/* Overview Tab */}
+        <TabsContent value="overview" className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>About the Project</CardTitle>
+              <CardDescription>Context and Objectives</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <p>
+                The <strong>Lifecycle Strategy Engine</strong> is a comprehensive analytics platform designed to optimize customer lifetime value (CLV) for e-commerce businesses. Built on the Olist Brazilian E-Commerce dataset, it provides actionable insights through advanced segmentation, predictive modeling, and strategy simulation.
+              </p>
+              <div className="grid gap-4 md:grid-cols-3 mt-4">
+                <div className="p-4 rounded-lg bg-primary/5 border border-primary/10">
+                  <h3 className="font-semibold flex items-center gap-2 mb-2">
+                    <Target className="w-4 h-4 text-primary" />
+                    Strategic Focus
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    Shift from reactive reporting to proactive strategy with predictive churn analysis and ROI simulation.
+                  </p>
+                </div>
+                <div className="p-4 rounded-lg bg-primary/5 border border-primary/10">
+                  <h3 className="font-semibold flex items-center gap-2 mb-2">
+                    <Users className="w-4 h-4 text-primary" />
+                    Customer Centric
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    Deep dive into customer behavior with RFM segmentation and sentiment analysis.
+                  </p>
+                </div>
+                <div className="p-4 rounded-lg bg-primary/5 border border-primary/10">
+                  <h3 className="font-semibold flex items-center gap-2 mb-2">
+                    <Zap className="w-4 h-4 text-primary" />
+                    Actionable
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    Directly translate insights into marketing actions with the Strategy Engine and A/B testing tools.
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* Architecture Tab */}
+        <TabsContent value="architecture" className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>Technical Stack (V2.0)</CardTitle>
+              <CardDescription>Modern, scalable, and performant technologies</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid gap-6 md:grid-cols-2">
+                <div className="space-y-4">
+                  <h3 className="font-semibold flex items-center gap-2">
+                    <LayoutDashboard className="w-4 h-4" />
+                    Frontend
+                  </h3>
+                  <ul className="space-y-2 text-sm text-muted-foreground">
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 className="w-3 h-3 text-emerald-500" />
+                      <strong>React 19:</strong> Latest features for optimal performance.
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 className="w-3 h-3 text-emerald-500" />
+                      <strong>Tailwind CSS 4:</strong> Utility-first styling with OKLCH colors.
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 className="w-3 h-3 text-emerald-500" />
+                      <strong>Shadcn UI:</strong> Accessible, professional component library.
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 className="w-3 h-3 text-emerald-500" />
+                      <strong>Recharts:</strong> Composable charting library for React.
+                    </li>
+                  </ul>
+                </div>
+                <div className="space-y-4">
+                  <h3 className="font-semibold flex items-center gap-2">
+                    <Database className="w-4 h-4" />
+                    Backend (Planned)
+                  </h3>
+                  <ul className="space-y-2 text-sm text-muted-foreground">
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 className="w-3 h-3 text-slate-400" />
+                      <strong>FastAPI (Python):</strong> High-performance API framework.
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 className="w-3 h-3 text-slate-400" />
+                      <strong>PostgreSQL:</strong> Robust relational database.
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 className="w-3 h-3 text-slate-400" />
+                      <strong>Celery:</strong> Asynchronous task queue for ML jobs.
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 className="w-3 h-3 text-slate-400" />
+                      <strong>Scikit-learn / XGBoost:</strong> Machine learning pipelines.
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* Features Tab */}
+        <TabsContent value="features" className="space-y-6">
+          <div className="grid gap-4 md:grid-cols-2">
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-base">RFM Analysis</CardTitle>
+              </CardHeader>
+              <CardContent className="text-sm text-muted-foreground">
+                3D visualization of customer segments based on Recency, Frequency, and Monetary value. Includes detailed segment breakdowns and tailored strategy recommendations.
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-base">Churn Prediction</CardTitle>
+              </CardHeader>
+              <CardContent className="text-sm text-muted-foreground">
+                ML-powered risk assessment with SHAP value explanations. Identifies high-risk users and provides global feature importance analysis.
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-base">Strategy Engine</CardTitle>
+              </CardHeader>
+              <CardContent className="text-sm text-muted-foreground">
+                <strong>Promotion Simulator:</strong> Calculate ROI and marginal returns for campaigns.<br/>
+                <strong>A/B Testing:</strong> Design experiments and calculate required sample sizes.
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-base">Market Insights</CardTitle>
+              </CardHeader>
+              <CardContent className="text-sm text-muted-foreground">
+                <strong>Recommendation:</strong> Personalized product suggestions with "Why" explanations.<br/>
+                <strong>Sentiment:</strong> NLP analysis of reviews with driver attribution.<br/>
+                <strong>Trends:</strong> Emerging topic tracking and keyword graphs.
+              </CardContent>
+            </Card>
           </div>
-        </CardContent>
-      </Card>
+        </TabsContent>
 
-      {/* Key Features */}
-      <div className="grid gap-6 md:grid-cols-2">
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Database className="w-5 h-5 text-emerald-500" />
-              Data Processing
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-2 text-sm">
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-500 mt-0.5" />
-                <span>Automated ETL pipeline for Olist datasets</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-500 mt-0.5" />
-                <span>Data cleaning and schema validation</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-500 mt-0.5" />
-                <span>Real-time metric aggregation</span>
-              </li>
-            </ul>
-          </CardContent>
-        </Card>
+        {/* API / Schema Tab */}
+        <TabsContent value="api" className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>Data Schema</CardTitle>
+              <CardDescription>Core entities and relationships</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ScrollArea className="h-[400px] rounded-md border p-4">
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="font-mono font-bold text-primary mb-2">customers</h4>
+                    <ul className="list-disc list-inside text-sm text-muted-foreground font-mono">
+                      <li>customer_id (PK)</li>
+                      <li>customer_unique_id</li>
+                      <li>customer_zip_code_prefix</li>
+                      <li>customer_city</li>
+                      <li>customer_state</li>
+                    </ul>
+                  </div>
+                  <Separator />
+                  <div>
+                    <h4 className="font-mono font-bold text-primary mb-2">orders</h4>
+                    <ul className="list-disc list-inside text-sm text-muted-foreground font-mono">
+                      <li>order_id (PK)</li>
+                      <li>customer_id (FK)</li>
+                      <li>order_status</li>
+                      <li>order_purchase_timestamp</li>
+                      <li>order_approved_at</li>
+                      <li>order_delivered_carrier_date</li>
+                      <li>order_delivered_customer_date</li>
+                      <li>order_estimated_delivery_date</li>
+                    </ul>
+                  </div>
+                  <Separator />
+                  <div>
+                    <h4 className="font-mono font-bold text-primary mb-2">order_items</h4>
+                    <ul className="list-disc list-inside text-sm text-muted-foreground font-mono">
+                      <li>order_id (FK)</li>
+                      <li>order_item_id</li>
+                      <li>product_id (FK)</li>
+                      <li>seller_id (FK)</li>
+                      <li>shipping_limit_date</li>
+                      <li>price</li>
+                      <li>freight_value</li>
+                    </ul>
+                  </div>
+                  <Separator />
+                  <div>
+                    <h4 className="font-mono font-bold text-primary mb-2">products</h4>
+                    <ul className="list-disc list-inside text-sm text-muted-foreground font-mono">
+                      <li>product_id (PK)</li>
+                      <li>product_category_name</li>
+                      <li>product_name_lenght</li>
+                      <li>product_description_lenght</li>
+                      <li>product_photos_qty</li>
+                      <li>product_weight_g</li>
+                      <li>product_length_cm</li>
+                      <li>product_height_cm</li>
+                      <li>product_width_cm</li>
+                    </ul>
+                  </div>
+                </div>
+              </ScrollArea>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
 
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Zap className="w-5 h-5 text-amber-500" />
-              AI & Analytics
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-2 text-sm">
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-amber-500 mt-0.5" />
-                <span>RFM Segmentation (K-Means Clustering)</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-amber-500 mt-0.5" />
-                <span>Churn Prediction (Logistic Regression)</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-amber-500 mt-0.5" />
-                <span>Sentiment Analysis (NLP)</span>
-              </li>
-            </ul>
-          </CardContent>
-        </Card>
+      <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground pt-8">
+        <Code2 className="w-4 h-4" />
+        <span>Built with React, Tailwind, and Recharts</span>
       </div>
-
-      {/* Technical Architecture */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Code2 className="w-5 h-5 text-blue-500" />
-            Technical Architecture
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div>
-            <h3 className="font-semibold mb-2">Frontend Layer</h3>
-            <p className="text-sm text-muted-foreground mb-4">
-              Built with React 19 and Vite for high performance. Uses Tailwind CSS 4 for styling and Shadcn UI for accessible, consistent components. Recharts is used for all data visualizations.
-            </p>
-          </div>
-          <Separator />
-          <div>
-            <h3 className="font-semibold mb-2">Data Layer (Simulation)</h3>
-            <p className="text-sm text-muted-foreground">
-              The current implementation uses a sophisticated mock data generator (`mockData.ts`) to simulate real-world e-commerce patterns, including seasonality, churn probability distributions, and sentiment trends. This allows for full UI/UX validation before backend integration.
-            </p>
-          </div>
-        </CardContent>
-      </Card>
     </div>
   );
+}
+
+function Target(props: any) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <circle cx="12" cy="12" r="10" />
+      <circle cx="12" cy="12" r="6" />
+      <circle cx="12" cy="12" r="2" />
+    </svg>
+  )
+}
+
+function Users(props: any) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+      <circle cx="9" cy="7" r="4" />
+      <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+    </svg>
+  )
 }

@@ -1,16 +1,19 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { generateKPIData, generateRevenueTrend, rfmSegments } from "@/lib/mockData";
-import { ArrowDown, ArrowUp, Minus, TrendingUp, Users, DollarSign, Activity } from "lucide-react";
-import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis, Cell, Pie, PieChart, Legend } from "recharts";
-import { cn } from "@/lib/utils";
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend, ReferenceLine, ReferenceDot } from "recharts";
+import { ArrowDown, ArrowUp, Minus, TrendingUp, Users, Activity, DollarSign, Info } from "lucide-react";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 
 export default function Home() {
   const kpiData = generateKPIData();
-  const trendData = generateRevenueTrend(30);
+  const revenueData = generateRevenueTrend();
+
+  // Add event annotations to revenue data
+  const eventIndex = Math.floor(revenueData.length / 2);
+  const eventDate = revenueData[eventIndex].date;
 
   return (
     <div className="space-y-8">
-      {/* Header */}
       <div className="flex flex-col gap-2">
         <h1 className="text-3xl font-bold tracking-tight text-foreground">Dashboard Overview</h1>
         <p className="text-muted-foreground">
@@ -20,36 +23,30 @@ export default function Home() {
 
       {/* KPI Cards */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        {kpiData.map((kpi, index) => (
-          <Card key={index} className="border-l-4 border-l-primary shadow-sm hover:shadow-md transition-shadow">
+        {kpiData.map((kpi, i) => (
+          <Card key={i} className="overflow-hidden border-l-4" style={{ borderLeftColor: i === 0 ? '#4F46E5' : i === 1 ? '#4F46E5' : i === 2 ? '#4F46E5' : '#4F46E5' }}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-muted-foreground">
                 {kpi.label}
               </CardTitle>
-              {index === 0 ? <DollarSign className="h-4 w-4 text-muted-foreground" /> :
-               index === 1 ? <Users className="h-4 w-4 text-muted-foreground" /> :
-               index === 2 ? <Activity className="h-4 w-4 text-muted-foreground" /> :
+              {i === 0 ? <DollarSign className="h-4 w-4 text-muted-foreground" /> : 
+               i === 1 ? <Users className="h-4 w-4 text-muted-foreground" /> :
+               i === 2 ? <Activity className="h-4 w-4 text-muted-foreground" /> :
                <TrendingUp className="h-4 w-4 text-muted-foreground" />}
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{kpi.value}</div>
               <div className="flex items-center text-xs mt-1">
-                {kpi.trend === "up" ? (
-                  <span className={cn("flex items-center font-medium", kpi.label === "Churn Rate" ? "text-destructive" : "text-secondary")}>
-                    <ArrowUp className="mr-1 h-3 w-3" />
-                    {Math.abs(kpi.change)}%
-                  </span>
-                ) : kpi.trend === "down" ? (
-                  <span className={cn("flex items-center font-medium", kpi.label === "Churn Rate" ? "text-secondary" : "text-destructive")}>
-                    <ArrowDown className="mr-1 h-3 w-3" />
-                    {Math.abs(kpi.change)}%
-                  </span>
+                {kpi.trend === 'up' ? (
+                  <ArrowUp className="h-3 w-3 text-emerald-500 mr-1" />
+                ) : kpi.trend === 'down' ? (
+                  <ArrowDown className="h-3 w-3 text-rose-500 mr-1" />
                 ) : (
-                  <span className="flex items-center text-muted-foreground font-medium">
-                    <Minus className="mr-1 h-3 w-3" />
-                    0%
-                  </span>
+                  <Minus className="h-3 w-3 text-slate-500 mr-1" />
                 )}
+                <span className={kpi.trend === 'up' ? 'text-emerald-500 font-medium' : kpi.trend === 'down' ? 'text-rose-500 font-medium' : 'text-slate-500'}>
+                  {kpi.change > 0 ? '+' : ''}{kpi.change}%
+                </span>
                 <span className="text-muted-foreground ml-1">{kpi.description}</span>
               </div>
             </CardContent>
@@ -57,22 +54,36 @@ export default function Home() {
         ))}
       </div>
 
-      {/* Main Charts Section */}
-      <div className="grid gap-4 md:grid-cols-7">
-        {/* Revenue Trend Chart */}
-        <Card className="col-span-4 shadow-sm">
-          <CardHeader>
-            <CardTitle>Revenue Trend</CardTitle>
-            <CardDescription>Daily revenue performance over the last 30 days</CardDescription>
+      <div className="grid gap-8 lg:grid-cols-3">
+        {/* Revenue Trend Chart with Event Annotation */}
+        <Card className="lg:col-span-2">
+          <CardHeader className="flex flex-row items-center justify-between">
+            <div>
+              <CardTitle>Revenue Trend</CardTitle>
+              <CardDescription>Daily revenue performance with key events</CardDescription>
+            </div>
+            <HoverCard>
+              <HoverCardTrigger asChild>
+                <Info className="w-4 h-4 text-muted-foreground cursor-help" />
+              </HoverCardTrigger>
+              <HoverCardContent className="w-80">
+                <div className="space-y-2">
+                  <h4 className="text-sm font-semibold">Event Driven Narrative</h4>
+                  <p className="text-xs text-muted-foreground">
+                    The chart highlights significant marketing events that impacted revenue. Hover over the dots to see details.
+                  </p>
+                </div>
+              </HoverCardContent>
+            </HoverCard>
           </CardHeader>
-          <CardContent className="pl-2">
+          <CardContent>
             <div className="h-[350px] w-full">
               <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={trendData}>
+                <AreaChart data={revenueData}>
                   <defs>
                     <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="var(--primary)" stopOpacity={0.3}/>
-                      <stop offset="95%" stopColor="var(--primary)" stopOpacity={0}/>
+                      <stop offset="5%" stopColor="#4F46E5" stopOpacity={0.3}/>
+                      <stop offset="95%" stopColor="#4F46E5" stopOpacity={0}/>
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border)" />
@@ -97,19 +108,22 @@ export default function Home() {
                   <Area 
                     type="monotone" 
                     dataKey="revenue" 
-                    stroke="var(--primary)" 
-                    strokeWidth={2}
+                    stroke="#4F46E5" 
+                    strokeWidth={2} 
                     fillOpacity={1} 
                     fill="url(#colorRevenue)" 
                   />
+                  {/* Event Annotation */}
+                  <ReferenceLine x={eventDate} stroke="var(--primary)" strokeDasharray="3 3" label={{ value: "Flash Sale", position: 'top', fill: 'var(--primary)', fontSize: 12 }} />
+                  <ReferenceDot x={eventDate} y={revenueData[eventIndex].revenue} r={6} fill="var(--primary)" stroke="var(--background)" strokeWidth={2} />
                 </AreaChart>
               </ResponsiveContainer>
             </div>
           </CardContent>
         </Card>
 
-        {/* RFM Distribution Chart */}
-        <Card className="col-span-3 shadow-sm">
+        {/* RFM Segments Pie Chart */}
+        <Card className="lg:col-span-1">
           <CardHeader>
             <CardTitle>Customer Segments</CardTitle>
             <CardDescription>Distribution by RFM segments</CardDescription>
@@ -140,7 +154,7 @@ export default function Home() {
                     verticalAlign="middle" 
                     align="right"
                     iconType="circle"
-                    formatter={(value, entry: any) => <span className="text-sm text-muted-foreground ml-1">{value}</span>}
+                    formatter={(value) => <span className="text-sm text-muted-foreground ml-1">{value}</span>}
                   />
                 </PieChart>
               </ResponsiveContainer>

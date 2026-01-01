@@ -1,10 +1,10 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { churnRiskData } from "@/lib/mockData";
+import { churnRiskData, mockFeatureImportance } from "@/lib/mockData";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { AlertTriangle, CheckCircle, HelpCircle, Play } from "lucide-react";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from "recharts";
+import { AlertTriangle, CheckCircle, HelpCircle, Play, RefreshCw } from "lucide-react";
+import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from "recharts";
 
 // Mock Calibration Curve Data
 const calibrationData = [
@@ -44,6 +44,25 @@ export default function ChurnPrediction() {
             <CardDescription>Logistic Regression (Calibrated)</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
+            {/* Feature Importance (SHAP) */}
+            <div className="space-y-2">
+              <h4 className="text-sm font-semibold mb-3">Feature Importance (SHAP)</h4>
+              <div className="h-[200px] w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart layout="vertical" data={mockFeatureImportance} margin={{ left: 40 }}>
+                    <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="var(--border)" />
+                    <XAxis type="number" domain={[0, 0.5]} hide />
+                    <YAxis dataKey="feature" type="category" width={100} tick={{ fontSize: 10 }} stroke="var(--muted-foreground)" />
+                    <Tooltip 
+                      cursor={{ fill: 'var(--muted)' }}
+                      contentStyle={{ backgroundColor: 'var(--popover)', borderColor: 'var(--border)', borderRadius: 'var(--radius)' }}
+                    />
+                    <Bar dataKey="importance" fill="var(--primary)" radius={[0, 4, 4, 0]} barSize={16} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+            <div className="border-t pt-4"></div>
             <div className="space-y-2">
               <div className="flex justify-between text-sm">
                 <span className="text-muted-foreground">AUC Score</span>
