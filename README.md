@@ -139,6 +139,37 @@ This repo is organized as a monorepo (common pattern):
 
 ---
 
+Example：
+
+Dashboard Overview — A KPI cockpit that summarizes revenue, customer activity, churn, and segment mix to spot performance shifts at a glance.
+<img width="1564" height="873" alt="Screenshot 2026-01-02 at 09 59 50" src="https://github.com/user-attachments/assets/5fc98bf4-e3df-4dec-82db-f3952a2d0134" />
+
+
+Data Management — Uploads lifecycle datasets, runs basic data-quality checks, and maps raw columns to a consistent analytics schema.
+<img width="1566" height="878" alt="Screenshot 2026-01-02 at 10 00 03" src="https://github.com/user-attachments/assets/5af8df1b-25a0-4643-a62b-4571576cebe3" />
+
+
+RFM Analysis — Segments customers by Recency/Frequency/Monetary value and produces exportable target lists with segment-level playbooks.
+<img width="1521" height="875" alt="Screenshot 2026-01-02 at 10 00 13" src="https://github.com/user-attachments/assets/c0a2b550-3608-456d-99d9-0061e66ff0b1" />
+
+
+Churn Prediction — Scores churn risk, shows model performance, and explains key drivers (e.g., via SHAP) to support intervention decisions.
+<img width="1524" height="875" alt="Screenshot 2026-01-02 at 10 00 29" src="https://github.com/user-attachments/assets/0fe864ac-6768-4248-a4bf-bba4e2300d2f" />
+
+
+Strategy Engine — Simulates retention/promotion tactics and supports A/B test planning with a sample-size calculator and experiment monitoring.
+<img width="1562" height="875" alt="Screenshot 2026-01-02 at 10 00 38" src="https://github.com/user-attachments/assets/68aaee38-58fb-497d-869a-7f55206adef8" />
+
+
+Insights & Trends — Surfaces recommendation, sentiment, and trend signals to explain “why” performance changes and what to do next.
+<img width="1564" height="875" alt="Screenshot 2026-01-02 at 10 00 55" src="https://github.com/user-attachments/assets/8a81e8f9-0c1f-4e52-9268-c1bd6b30be9d" />
+
+
+Project Documentation — Centralizes the PRD-style overview, architecture notes, feature specs, and data schema so metrics and logic are auditable.
+<img width="1521" height="875" alt="Screenshot 2026-01-02 at 10 01 09" src="https://github.com/user-attachments/assets/e3da7aaf-fead-4971-9e36-fb13aea5d5ed" />
+
+
+
 ## License
 Choose a license appropriate for your portfolio goals (MIT is common for demos).  
 If you haven’t added one yet, create `LICENSE` and reference it here.
